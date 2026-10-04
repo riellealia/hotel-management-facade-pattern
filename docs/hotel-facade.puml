@@ -1,0 +1,48 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+interface "HotelService<T>" as HotelService {
+  + provideService(request: T): void
+}
+
+class Valet {
+  + pickUpVehicle(plateNumber: String): void
+  + provideService(plateNumber: String): void
+}
+
+class HouseKeeping {
+  + cleanRoom(roomNumber: int): void
+  + provideService(roomNumber: Integer): void
+}
+
+class Cart {
+  + requestCart(numberOfCarts: int): void
+  + provideService(numberOfCarts: Integer): void
+}
+
+class FrontDesk {
+  - valet: Valet
+  - houseKeeping: HouseKeeping
+  - cart: Cart
+  + FrontDesk()
+  + requestVehiclePickUp(plateNumber: String): void
+  + requestRoomCleaning(roomNumber: int): void
+  + requestLuggageCart(numberOfCarts: int): void
+}
+
+class HotelApp {
+  + main(args: String[]): void
+}
+
+HotelService <|.. Valet
+HotelService <|.. HouseKeeping
+HotelService <|.. Cart
+FrontDesk *-- Valet
+FrontDesk *-- HouseKeeping
+FrontDesk *-- Cart
+HotelApp --> FrontDesk : uses
+
+note right of FrontDesk
+  Facade
+end note
+@enduml
